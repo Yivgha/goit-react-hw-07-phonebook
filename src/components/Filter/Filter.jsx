@@ -1,9 +1,9 @@
 import { IoFilterOutline } from 'react-icons/io5';
 import { Wrapper, TitleFilter, InputFilter } from './Filter.styled';
 import { useDispatch } from 'react-redux';
-import { setFilter } from 'redux/contactsSlice';
+import { setFilter } from 'redux/filter/filterSlice';
 
-export function Filter({ value, onChange }) {
+export function Filter() {
   const dispatch = useDispatch();
 
   return (
@@ -11,7 +11,10 @@ export function Filter({ value, onChange }) {
       <TitleFilter>
         Find contacts by name <IoFilterOutline />
       </TitleFilter>
-      <InputFilter type="text" value={value}  onChange={e => dispatch(setFilter(e.currentTarget.value))} />
+      <InputFilter
+        type="text"
+        onChange={e => dispatch(setFilter(e.currentTarget.value))}
+      />
     </Wrapper>
   );
 };

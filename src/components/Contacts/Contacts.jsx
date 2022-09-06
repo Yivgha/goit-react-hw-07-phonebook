@@ -5,28 +5,28 @@ import {
   TextContacts,
   DeleteBtn,
 } from './Contacts.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact, getContacts, getFilter } from 'redux/contactsSlice';
+import { useGetContactsQuery } from '../../redux/contactsSlice';
+import { getVisibleContacts } from '../../redux/filter/filterSlice';
+import { useDeleteContactMutation } from '../../redux/contactsSlice';
+import { useSelector } from 'react-redux';
 
 export function Contacts() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
-
-  const getFilteredContacts = () => {
-    const normalized = filter.toLowerCase();
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalized));
-  };
-  const visibleContacts = getFilteredContacts();
+  const [deleteContact, { isLoading }] = useDeleteContactMutation();
+  const { data: contacts } = useGetContactsQuery();
+  const visibleContacts = useSelector(state =>
+    getVisibleContacts(state, contacts)
+  );
 
   return (
     <ListContacts>
-      {visibleContacts.map(({ id, name, number }) => (
+      {visibleContacts.map(({ id, name, phone }) => (
         <ItemContacts key={id}>
           <TextContacts>
-            {name}: {number}
+            {name}: {phone}
           </TextContacts>
-          <DeleteBtn onClick={() => dispatch(deleteContact(id))}>
+          <DeleteBtn type="button"
+            disabled={isLoading}
+            onClick={() => deleteContact(id)}>
             <VscTrash />
           </DeleteBtn>
         </ItemContacts>
