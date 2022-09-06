@@ -5,20 +5,20 @@ export const ListContacts = styled.ul``;
 
 export const ItemContacts = styled.li`
   display: flex;
-  gap: 15px;
+  // gap: 15px;
   align-items: baseline;
   justify-content: space-between;
-  padding: 8px;
+  padding: 10px;
   height: 30px;
   width: 250px;
+  margin: 5px 0;
 `;
 
 export const TextContacts = styled.p`
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
-  line-height: 1.71;
-  letter-spacing: 0.03em;
+  line-height: 1.13;
   color: ${theme.colors.title};
 `;
 
